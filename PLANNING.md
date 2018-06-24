@@ -46,9 +46,8 @@ For mobile app:
 
 The user will be prompted for the following inputs:
 
-1. API key (if needed)
-2. Zip code
-3. Date for showtimes
+1. Zip code
+2. Date for showtimes
 
 ### Information Outputs
 
@@ -60,17 +59,17 @@ Program outputs:
 
 ## Technology Requirements
 
-### APIs and Web Service Requirements
+###Web Service Requirements
 
-This application may utilize the Fandango API (https://developer.fandango.com/)
-
-API documents are available here (registration required): https://developer.fandango.com/docs
+This application now utilizes movie listings available through the Internet Movie Database (example source URL: https://www.imdb.com/showtimes/)
 
 ### Python Package Requirements
 The application may require the use of the following packages:
 
-- requests (for web requests to the Fandango API)
+- requests (for web requests)
 - tkinter (may create a GUI for user inputs)
+- beautifulsoup (for parsing html)
+- lxml (for html parsing)
 - pytest (for testing)
 
 The application will likely also utilize the following modules:
