@@ -42,64 +42,77 @@ soup_div = soup_response.find_all('div', class_ = "list_item odd")
 #print(len(soup_div))
 #print(soup_div[0])
 
-showtimes = soup_div[0]
+#showtimes = soup_div[0]
+#
+##FIRST THEATER NAME
+#first_theater = showtimes.find_all('div', class_ = "fav_box")
+##print(first_theater)
+##print(first_theater[0])
+#first_theater = first_theater[0]
+##print(first_title)
+##print(first_theater.h3.a.text)
+#first_theater = first_theater.h3.a.text
+#
+##FIRST THEATER ADDRESS
+#first_address = showtimes.find_all('div', class_ = "address")
+##print(first_address[0].span.text)
+##print(first_address[0])
+#first_address = first_address[0]
+##print(first_address)
+#first_street = first_address.find('span', attrs = {'itemprop' : 'streetAddress'})
+#first_city = first_address.find('span', attrs = {'itemprop' : 'addressLocality'})
+#first_state = first_address.find('span', attrs = {'itemprop' : 'addressRegion'})
+#first_zip = first_address.find('span', attrs = {'itemprop' : 'postalCode'})
+#first_street = first_street.text
+#first_city = first_city.text
+#first_state = first_state.text
+#first_zip = first_zip.text
+#
+##FIRST MOVIE TITLE
+#first_movie = showtimes.find_all('div', class_ = "info")
+#first_movie = first_movie[0]
+#first_movie_title = first_movie.a.text
+#
+##FIRST MOVIE SHOWTIMES
+##print(first_movie)
+#
+#first_movie_times = first_movie.find('div', class_ = "showtimes")
+##print(type(first_movie_times))
+##print(first_movie_times.a)
+#first_movie_times = first_movie_times.a
+##print(first_movie_times["data-displaytimes"])
+#first_movie_times = first_movie_times["data-displaytimes"]
+##print(first_movie_times)
+#
+##first_movie_times = first_movie.find('div', class_ = "btn_float")
+##first_movie_times = first_movie.find_all(attrs = {"target" : "_target"})
+###print(first_movie_times[1].text)
+##first_movie_times = str(first_movie_times[0].text) + " | " + str(first_movie_times[1].text)
+##print(first_movie_times)
+#
+##FULL FIRST SHOWTIME PRINTOUT
+##print(welcome)
+##print(f"""{first_theater}
+##{first_street}
+##{first_city}, {first_state} {first_zip}
+##
+##    {first_movie_title}
+##    {first_movie_times}
+##            """)
+#
+##print(len(soup_div))
+##print(soup_div[10].h3)
 
-#FIRST THEATER NAME
-first_theater = showtimes.find_all('div', class_ = "fav_box")
-#print(first_theater)
-#print(first_theater[0])
-first_theater = first_theater[0]
-#print(first_title)
-#print(first_theater.h3.a.text)
-first_theater = first_theater.h3.a.text
+##COLLECT ALL THEATERS
+theaters = []
 
-#FIRST THEATER ADDRESS
-first_address = showtimes.find_all('div', class_ = "address")
-#print(first_address[0].span.text)
-#print(first_address[0])
-first_address = first_address[0]
-#print(first_address)
-first_street = first_address.find('span', attrs = {'itemprop' : 'streetAddress'})
-first_city = first_address.find('span', attrs = {'itemprop' : 'addressLocality'})
-first_state = first_address.find('span', attrs = {'itemprop' : 'addressRegion'})
-first_zip = first_address.find('span', attrs = {'itemprop' : 'postalCode'})
-first_street = first_street.text
-first_city = first_city.text
-first_state = first_state.text
-first_zip = first_zip.text
+for t in soup_div:
+    if t.find('div', class_ = "fav_box") is not None:
+        showtime_data = t.find('div', class_ = "fav_box")
+        theater = showtime_data.h3.a.text
+        theaters.append(theater)
 
-#FIRST MOVIE TITLE
-first_movie = showtimes.find_all('div', class_ = "info")
-first_movie = first_movie[0]
-first_movie_title = first_movie.a.text
-
-#FIRST MOVIE SHOWTIMES
-#print(first_movie)
-
-first_movie_times = first_movie.find('div', class_ = "showtimes")
-#print(type(first_movie_times))
-print(first_movie_times.a)
-first_movie_times = first_movie_times.a
-#print(first_movie_times["data-displaytimes"])
-first_movie_times = first_movie_times["data-displaytimes"]
-#print(first_movie_times)
-
-#first_movie_times = first_movie.find('div', class_ = "btn_float")
-#first_movie_times = first_movie.find_all(attrs = {"target" : "_target"})
-##print(first_movie_times[1].text)
-#first_movie_times = str(first_movie_times[0].text) + " | " + str(first_movie_times[1].text)
-#print(first_movie_times)
-
-#FULL FIRST SHOWTIME PRINTOUT
-print(welcome)
-print(f"""{first_theater}
-{first_street}
-{first_city}, {first_state} {first_zip}
-
-    {first_movie_title}
-    {first_movie_times}
-            """)
-
+print(theaters)
 
 #first_street_address = first_address.div.find('span', itemprop_ = "streetAddress")
 #print(first_street_address)
