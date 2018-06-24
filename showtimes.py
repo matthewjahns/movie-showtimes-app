@@ -104,18 +104,48 @@ soup_div = soup_response.find_all('div', class_ = "list_item odd")
 ##print(soup_div[10].h3)
 
 ##COLLECT ALL THEATERS
-theaters = []
+theater_names = []
+theater_streets = []
+theater_cities = []
+theater_states = []
+theater_zips = []
 
 for t in soup_div:
     if t.find('div', class_ = "fav_box") is not None:
-        showtime_data = t.find('div', class_ = "fav_box")
-        theater = showtime_data.h3.a.text
-        theaters.append(theater)
+        theater_data = t.find('div', class_ = "fav_box")
+        theater = theater_data.h3.a.text
+        theater_names.append(theater)
 
-print(theaters)
+    if t.find('span', attrs = {'itemprop' : 'streetAddress'}) is not None:
+        street_data = t.find('span', attrs = {'itemprop' : 'streetAddress'})
+        street = street_data.text
+        theater_streets.append(street)
 
-#first_street_address = first_address.div.find('span', itemprop_ = "streetAddress")
-#print(first_street_address)
+    if t.find('span', attrs = {'itemprop' : 'addressRegion'}) is not None:
+        city_data = t.find('span', attrs = {'itemprop' : 'addressRegion'})
+        city = city_data.text
+        theater_cities.append(city)
+
+    if t.find('span', attrs = {'itemprop' : 'addressLocality'}) is not None:
+        state_data = t.find('span', attrs = {'itemprop' : 'addressLocality'})
+        state = state_data.text
+        theater_states.append(state)
+
+    if t.find('span', attrs = {'itemprop' : 'postalCode'}) is not None:
+        zip_data = t.find('span', attrs = {'itemprop' : 'postalCode'})
+        zip = zip_data.text
+        theater_zips.append(zip)
+
+print(len(theater_names))
+print(len(theater_streets))
+print(len(theater_cities))
+print(len(theater_states))
+print(len(theater_zips))
+
+
+#first_zip = first_address.find('span', attrs = {'itemprop' : 'postalCode'})
+
+
 
 
 #print(first_showtime)
