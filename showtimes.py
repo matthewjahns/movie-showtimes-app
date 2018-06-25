@@ -109,8 +109,11 @@ theater_streets = []
 theater_cities = []
 theater_states = []
 theater_zips = []
+movie_titles = []
+movie_showtimes = []
 
 for t in soup_div:
+    
     if t.find('div', class_ = "fav_box") is not None:
         theater_data = t.find('div', class_ = "fav_box")
         theater = theater_data.h3.a.text
@@ -121,13 +124,13 @@ for t in soup_div:
         street = street_data.text
         theater_streets.append(street)
 
-    if t.find('span', attrs = {'itemprop' : 'addressRegion'}) is not None:
-        city_data = t.find('span', attrs = {'itemprop' : 'addressRegion'})
+    if t.find('span', attrs = {'itemprop' : 'addressLocality'}) is not None:
+        city_data = t.find('span', attrs = {'itemprop' : 'addressLocality'})
         city = city_data.text
         theater_cities.append(city)
 
-    if t.find('span', attrs = {'itemprop' : 'addressLocality'}) is not None:
-        state_data = t.find('span', attrs = {'itemprop' : 'addressLocality'})
+    if t.find('span', attrs = {'itemprop' : 'addressRegion'}) is not None:
+        state_data = t.find('span', attrs = {'itemprop' : 'addressRegion'})
         state = state_data.text
         theater_states.append(state)
 
@@ -136,11 +139,27 @@ for t in soup_div:
         zip = zip_data.text
         theater_zips.append(zip)
 
-print(len(theater_names))
-print(len(theater_streets))
-print(len(theater_cities))
-print(len(theater_states))
-print(len(theater_zips))
+    if t.find('div', class_ = "info") is not None:
+        showtime_data = t.find('div', class_ = "info")
+
+        for m in showtime_data:
+
+            if showtime_data.h4.span.a.text is not None:
+                title = showtime_data.h4.span.a.text
+                movie_titles.append(title)
+
+            if showtime_data.div.div is not None:
+                time_data = showtime_data.div.div
+                time = time_data.a["data-displaytimes"]
+                movie_showtimes.append(time)
+
+#print(movie_showtimes)
+
+#print(theater_names)
+#print(theater_streets)
+#print(theater_cities)
+#print(theater_states)
+#print(theater_zips)
 
 
 #first_zip = first_address.find('span', attrs = {'itemprop' : 'postalCode'})
