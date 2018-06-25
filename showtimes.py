@@ -7,7 +7,6 @@ from bs4 import BeautifulSoup
 import datetime
 import pytest
 import tkinter
-import tkinter.messagebox
 from lxml import html
 from IPython import embed
 
@@ -83,6 +82,18 @@ zip_error = "The zip code entered does not appear to be valid. Please check your
 
 zip_url_error = "We were unable to find any showtimes near the entered zip code. Please check your entry and try again."
 
+#Dates with help from URL: https://stackoverflow.com/questions/1506901/cleanest-and-most-pythonic-way-to-get-tomorrows-date
+
+day_one = datetime.date.today()
+day_two = datetime.date.today() + datetime.timedelta(days=1)
+day_three = datetime.date.today() + datetime.timedelta(days=2)
+day_four = datetime.date.today() + datetime.timedelta(days=3)
+day_five = datetime.date.today() + datetime.timedelta(days=4)
+day_six = datetime.date.today() + datetime.timedelta(days=5)
+day_seven = datetime.date.today() + datetime.timedelta(days=6)
+
+
+
 #print(welcome)
 if __name__ == '__main__':
 
@@ -93,13 +104,24 @@ if __name__ == '__main__':
     zip_label_prompt = tkinter.Label(text="Please enter a 5-digit postal code (US only): ")
     z_entry = tkinter.StringVar()
     zip_entry = tkinter.Entry(textvariable=z_entry)
-#    zip_url = str(zip_label)
-#    zip_url = "10003"
+
+    date_radio_label = tkinter.Label(text="\n\nPlease select a show date: ")
+    date_radio_value = tkinter.StringVar()
+#    date_radio_a = tkinter.Radiobutton(text="2018-06-27", value="2018-06-27", variable=date_radio_value)
+
+    date_radio_a = tkinter.Radiobutton(text=day_one.strftime("%B %d, %Y "), value=day_one.strftime("%Y-%m-%d"), variable=date_radio_value)
+    date_radio_b = tkinter.Radiobutton(text=day_two.strftime("%B %d, %Y "), value=day_two.strftime("%Y-%m-%d"), variable=date_radio_value)
+    date_radio_c = tkinter.Radiobutton(text=day_three.strftime("%B %d, %Y "), value=day_three.strftime("%Y-%m-%d"), variable=date_radio_value)
+    date_radio_d = tkinter.Radiobutton(text=day_four.strftime("%B %d, %Y "), value=day_four.strftime("%Y-%m-%d"), variable=date_radio_value)
+    date_radio_e = tkinter.Radiobutton(text=day_five.strftime("%B %d, %Y "), value=day_five.strftime("%Y-%m-%d"), variable=date_radio_value)
+    date_radio_f = tkinter.Radiobutton(text=day_six.strftime("%B %d, %Y "), value=day_six.strftime("%Y-%m-%d"), variable=date_radio_value)
+    date_radio_g = tkinter.Radiobutton(text=day_seven.strftime("%B %d, %Y "), value=day_seven.strftime("%Y-%m-%d"), variable=date_radio_value)
 
     def handle_button_click():
         print("Submitting your entry...")
         print("Searching for movie showtimes")
         zip_url = str(zip_entry.get())
+        date_url = str(date_radio_value.get())
 
         #    try:
         #        float(zip_url)
@@ -111,7 +133,7 @@ if __name__ == '__main__':
         #    quit("The entry does not appear to be a valid zip code. Please try again with a five-digit postal code.")
 
         #request_url = "https://www.imdb.com/showtimes/US/10003/2018-06-26"
-        request_url = f"https://www.imdb.com/showtimes/US/{zip_url}/2018-06-26"
+        request_url = f"https://www.imdb.com/showtimes/US/{zip_url}/{date_url}"
 
         response = requests.get(request_url)
         soup_response = BeautifulSoup(response.text, 'lxml')
@@ -266,6 +288,16 @@ if __name__ == '__main__':
 
     zip_label_prompt.pack()
     zip_entry.pack()
+
+    date_radio_label.pack()
+
+    date_radio_a.pack()
+    date_radio_b.pack()
+    date_radio_c.pack()
+    date_radio_d.pack()
+    date_radio_e.pack()
+    date_radio_f.pack()
+    date_radio_g.pack()
 
     submit_button.pack()
     window.mainloop()
