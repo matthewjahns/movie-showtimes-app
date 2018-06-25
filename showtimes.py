@@ -11,78 +11,13 @@ from lxml import html
 from IPython import embed
 
 ## Movie Showtimes Application
-welcome = """
-
-Welcome to Movie Showtimes!
-powered by the Internet Movie Database
-(https://www.imdb.com/)
-
-"""
-
-        ##FIRST THEATER DETAILS
-            #first_theater = showtimes.find_all('div', class_ = "fav_box")
-            ##print(first_theater)
-            ##print(first_theater[0])
-            #first_theater = first_theater[0]
-            ##print(first_title)
-            ##print(first_theater.h3.a.text)
-            #first_theater = first_theater.h3.a.text
-            #
-            ##FIRST THEATER ADDRESS
-            #first_address = showtimes.find_all('div', class_ = "address")
-            ##print(first_address[0].span.text)
-            ##print(first_address[0])
-            #first_address = first_address[0]
-            ##print(first_address)
-            #first_street = first_address.find('span', attrs = {'itemprop' : 'streetAddress'})
-            #first_city = first_address.find('span', attrs = {'itemprop' : 'addressLocality'})
-            #first_state = first_address.find('span', attrs = {'itemprop' : 'addressRegion'})
-            #first_zip = first_address.find('span', attrs = {'itemprop' : 'postalCode'})
-            #first_street = first_street.text
-            #first_city = first_city.text
-            #first_state = first_state.text
-            #first_zip = first_zip.text
-            #
-            ##FIRST MOVIE TITLE
-            #first_movie = showtimes.find_all('div', class_ = "info")
-            #first_movie = first_movie[0]
-            #first_movie_title = first_movie.a.text
-            #
-            ##FIRST MOVIE SHOWTIMES
-            ##print(first_movie)
-            #
-            #first_movie_times = first_movie.find('div', class_ = "showtimes")
-            ##print(type(first_movie_times))
-            ##print(first_movie_times.a)
-            #first_movie_times = first_movie_times.a
-            ##print(first_movie_times["data-displaytimes"])
-            #first_movie_times = first_movie_times["data-displaytimes"]
-            ##print(first_movie_times)
-            #
-            ##first_movie_times = first_movie.find('div', class_ = "btn_float")
-            ##first_movie_times = first_movie.find_all(attrs = {"target" : "_target"})
-            ###print(first_movie_times[1].text)
-            ##first_movie_times = str(first_movie_times[0].text) + " | " + str(first_movie_times[1].text)
-            ##print(first_movie_times)
-            #
-            ##FULL FIRST SHOWTIME PRINTOUT
-            ##print(welcome)
-            ##print(f"""{first_theater}
-            ##{first_street}
-            ##{first_city}, {first_state} {first_zip}
-            ##
-            ##    {first_movie_title}
-            ##    {first_movie_times}
-            ##            """)
-        #
-        ##print(len(soup_div))
-        ##print(soup_div[10].h3)
 
 zip_error = "The zip code entered does not appear to be valid. Please check your entry and try again."
 
-zip_url_error = "We were unable to find any showtimes near the entered zip code. Please check your entry and try again."
+zip_url_error = """We were unable to find any showtimes near the entered zip code. Please check your entry and try again.
+"""
 
-#Dates with help from URL: https://stackoverflow.com/questions/1506901/cleanest-and-most-pythonic-way-to-get-tomorrows-date
+#Date variables with help from URL: https://stackoverflow.com/questions/1506901/cleanest-and-most-pythonic-way-to-get-tomorrows-date
 
 day_one = datetime.date.today()
 day_two = datetime.date.today() + datetime.timedelta(days=1)
@@ -94,7 +29,6 @@ day_seven = datetime.date.today() + datetime.timedelta(days=6)
 
 
 
-#print(welcome)
 if __name__ == '__main__':
 
     window = tkinter.Tk()
@@ -102,12 +36,11 @@ if __name__ == '__main__':
     welcome_message = tkinter.Message(text="\nWelcome to Movie Showtimes!\nPowered by the Internet Movie Database \n (https://www.imdb.com/) \n")
 
     zip_label_prompt = tkinter.Label(text="Please enter a 5-digit postal code (US only): ")
-    z_entry = tkinter.StringVar()
+    z_entry = tkinter.StringVar(value="Enter Here")
     zip_entry = tkinter.Entry(textvariable=z_entry)
 
     date_radio_label = tkinter.Label(text="\n\nPlease select a show date: ")
-    date_radio_value = tkinter.StringVar()
-#    date_radio_a = tkinter.Radiobutton(text="2018-06-27", value="2018-06-27", variable=date_radio_value)
+    date_radio_value = tkinter.StringVar(value=day_one.strftime("%Y-%m-%d"))
 
     date_radio_a = tkinter.Radiobutton(text=day_one.strftime("%B %d, %Y "), value=day_one.strftime("%Y-%m-%d"), variable=date_radio_value)
     date_radio_b = tkinter.Radiobutton(text=day_two.strftime("%B %d, %Y "), value=day_two.strftime("%Y-%m-%d"), variable=date_radio_value)
@@ -118,21 +51,23 @@ if __name__ == '__main__':
     date_radio_g = tkinter.Radiobutton(text=day_seven.strftime("%B %d, %Y "), value=day_seven.strftime("%Y-%m-%d"), variable=date_radio_value)
 
     def handle_button_click():
-        print("Submitting your entry...")
-        print("Searching for movie showtimes")
+        print("""
+Submitting your entry...
+""")
+
         zip_url = str(zip_entry.get())
+
         date_url = str(date_radio_value.get())
 
-        #    try:
-        #        float(zip_url)
-        #        pass
-        #    except ValueError as e:
-        #        quit("The entry does not appear to be a valid zip code. Please try again.")
+        if len(zip_url) == 5 and zip_url.isdigit() == True:
+            pass
+        else:
+            print(f"""The zip code entered--"{zip_url}"--does not appear to be valid. Please check your entry and try again.
+            """)
+            quit("Stopping the program.")
 
-        #if len(zip_url) != 5:
-        #    quit("The entry does not appear to be a valid zip code. Please try again with a five-digit postal code.")
+        print("Searching for movie showtimes...")
 
-        #request_url = "https://www.imdb.com/showtimes/US/10003/2018-06-26"
         request_url = f"https://www.imdb.com/showtimes/US/{zip_url}/{date_url}"
 
         response = requests.get(request_url)
@@ -156,16 +91,17 @@ if __name__ == '__main__':
         movie_titles = []
         movie_times = []
 
-        theater_directory = {
+        theater_details = {
                 "theater": "",
                 "address": ""
                 }
 
-        movie_directory = {
+        movie_showtime = {
                 "title": "",
                 "times": ""
                 }
 
+        theater_directory = []
         movie_showtimes = []
 
         for t in soup_div:
@@ -210,12 +146,40 @@ if __name__ == '__main__':
 
                     if m.h4.span.a.text is not None:
                         title = m.h4.span.a.text
-                        movie_titles.append(title)
+                        time = "Sorry--No movie times found."
 
                     if m.div.div is not None:
-                        time_data = m.div.div
-                        time = time_data.a["data-displaytimes"]
-                        movie_times.append(time)
+                        movie_data = m.div.div
+                        if movie_data.a["data-title"] is not None:
+                            title = movie_data.a["data-title"]
+                        else:
+                            title = title
+
+                        if movie_data.a["data-displaytimes"] is not None:
+                            time = movie_data.a["data-displaytimes"]
+                        else:
+                            if m.find_all('div', class_ = "showtimes") is not None:
+                                time = ""
+                                time_data = m.find_all('div', class_ = "showtimes")
+                                for s in time_data:
+                                    times = s.text
+                                    time.append(f"{times} | ")
+
+                            else:
+                                time = "Sorry--No movie times found."
+
+                    movie_titles.append(title)
+                    movie_times.append(time)
+
+#                    if m.div.div is not None:
+#                        title_data = m.div.div
+#                        title = title_data.a["data-title"]
+#                        movie_titles.append(title)
+
+#                    if m.div.div is not None:
+#                        time_data = m.div.div
+#                        time = time_data.a["data-displaytimes"]
+#                        movie_times.append(time)
 
                     movie_showtime = f"""
             {title}
@@ -224,7 +188,7 @@ if __name__ == '__main__':
 
                     print(movie_showtime)
 
-        #            movie_showtimes.append(movie_showtime)
+                    movie_showtimes.append(movie_showtime)
 
         for t in soup_div_even:
 
@@ -266,14 +230,48 @@ if __name__ == '__main__':
 
                 for m in showtime_data:
 
+                    if m.find('div', class_ = "showtimes") is not None:
+
+#with help from URL: http://texthandler.com/info/remove-line-breaks-python/
+
+                        time_data = m.find('div', class_ = "showtimes")
+                        time = time_data.text
+                        time = time.replace("\r","")
+                        time = time.replace("\n","")
+                        time = time.replace(" ","")
+                        time = time.replace("0a","0 a")
+                        time = time.replace("0p","0 p")
+                    else:
+                        time = "Sorry--No movie times found."
+
+#                    if m.h4.span.a.text is not None:
+#                        title = m.h4.span.a.text
+#                        movie_titles.append(title)
+
                     if m.h4.span.a.text is not None:
                         title = m.h4.span.a.text
-                        movie_titles.append(title)
+#                        time = "Sorry--No movie times found."
 
                     if m.div.div is not None:
-                        time_data = m.div.div
-                        time = time_data.a["data-displaytimes"]
-                        movie_times.append(time)
+                        movie_data = m.div.div
+                        if movie_data.a["data-title"] is not None:
+                            title = movie_data.a["data-title"]
+                        else:
+                            title = title
+
+                        if movie_data.a["data-displaytimes"] is not None:
+                            time = movie_data.a["data-displaytimes"]
+
+
+                    movie_titles.append(title)
+                    movie_times.append(time)
+
+#                    if m.div.div is not None:
+#                        movie_data = m.div.div
+#                        title = movie_data.a["data-title"]
+#                        movie_titles.append(title)
+#                        time = movie_data.a["data-displaytimes"]
+#                        movie_times.append(time)
 
                     movie_showtime = f"""
             {title}
@@ -301,15 +299,3 @@ if __name__ == '__main__':
 
     submit_button.pack()
     window.mainloop()
-
-
-
-
-## TODO: add input for zip code
-##zip = input("Please enter the 5-digit zip code for your area")
-
-## TODO: add date functionality
-
-## TODO: add request to web
-
-## TODO
