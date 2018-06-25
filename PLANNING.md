@@ -53,9 +53,7 @@ The user will be prompted for the following inputs:
 
 Program outputs:
 
-1. The application will output a listing of movie showtimes by theater for the date input by the user, in the proximity of the zip code input by the user, in the command prompt.
-
-2. A csv file containing the showtimes for the most recent search.
+The application will output a listing of movie showtimes by theater for the date input by the user, in the proximity of the zip code input by the user, in the command prompt.
 
 ## Technology Requirements
 
@@ -74,9 +72,6 @@ The application may require the use of the following packages:
 
 The application will likely also utilize the following modules:
 
-- csv
-- json
-- os
 - datetime
 - pdb (for testing)
 

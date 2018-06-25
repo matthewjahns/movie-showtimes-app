@@ -1,11 +1,8 @@
-import csv
-import json
-import os
-import pdb
 import requests
 from bs4 import BeautifulSoup
 import datetime
 import pytest
+import pdb
 import tkinter
 from lxml import html
 from IPython import embed
@@ -109,113 +106,27 @@ Submitting your entry...
             if t.find('div', class_ = "fav_box") is not None:
                 theater_data = t.find('div', class_ = "fav_box")
                 theater = theater_data.h3.a.text
-                theater_names.append(theater)
+#                theater_names.append(theater)
 
             if t.find('span', attrs = {'itemprop' : 'streetAddress'}) is not None:
                 street_data = t.find('span', attrs = {'itemprop' : 'streetAddress'})
                 street = street_data.text
-                theater_streets.append(street)
+#                theater_streets.append(street)
 
             if t.find('span', attrs = {'itemprop' : 'addressLocality'}) is not None:
                 city_data = t.find('span', attrs = {'itemprop' : 'addressLocality'})
                 city = city_data.text
-                theater_cities.append(city)
+#                theater_cities.append(city)
 
             if t.find('span', attrs = {'itemprop' : 'addressRegion'}) is not None:
                 state_data = t.find('span', attrs = {'itemprop' : 'addressRegion'})
                 state = state_data.text
-                theater_states.append(state)
+#                theater_states.append(state)
 
             if t.find('span', attrs = {'itemprop' : 'postalCode'}) is not None:
                 zip_data = t.find('span', attrs = {'itemprop' : 'postalCode'})
                 zip = zip_data.text
-                theater_zips.append(zip)
-
-            theater_details = f"""
-
-{theater}
-{street}
-{city}, {state} {zip}"""
-
-            print(theater_details)
-
-            if t.find_all('div', class_ = "info") is not None:
-                showtime_data = t.find_all('div', class_ = "info")
-
-                for m in showtime_data:
-
-                    if m.h4.span.a.text is not None:
-                        title = m.h4.span.a.text
-                        time = "Sorry--No movie times found."
-
-                    if m.div.div is not None:
-                        movie_data = m.div.div
-                        if movie_data.a["data-title"] is not None:
-                            title = movie_data.a["data-title"]
-                        else:
-                            title = title
-
-                        if movie_data.a["data-displaytimes"] is not None:
-                            time = movie_data.a["data-displaytimes"]
-                        else:
-                            if m.find_all('div', class_ = "showtimes") is not None:
-                                time = ""
-                                time_data = m.find_all('div', class_ = "showtimes")
-                                for s in time_data:
-                                    times = s.text
-                                    time.append(f"{times} | ")
-
-                            else:
-                                time = "Sorry--No movie times found."
-
-                    movie_titles.append(title)
-                    movie_times.append(time)
-
-#                    if m.div.div is not None:
-#                        title_data = m.div.div
-#                        title = title_data.a["data-title"]
-#                        movie_titles.append(title)
-
-#                    if m.div.div is not None:
-#                        time_data = m.div.div
-#                        time = time_data.a["data-displaytimes"]
-#                        movie_times.append(time)
-
-                    movie_showtime = f"""
-            {title}
-            {time}
-            """
-
-                    print(movie_showtime)
-
-                    movie_showtimes.append(movie_showtime)
-
-        for t in soup_div_even:
-
-            if t.find('div', class_ = "fav_box") is not None:
-                theater_data = t.find('div', class_ = "fav_box")
-                theater = theater_data.h3.a.text
-                theater_names.append(theater)
-
-            if t.find('span', attrs = {'itemprop' : 'streetAddress'}) is not None:
-                street_data = t.find('span', attrs = {'itemprop' : 'streetAddress'})
-                street = street_data.text
-                theater_streets.append(street)
-
-            if t.find('span', attrs = {'itemprop' : 'addressLocality'}) is not None:
-                city_data = t.find('span', attrs = {'itemprop' : 'addressLocality'})
-                city = city_data.text
-                theater_cities.append(city)
-
-            if t.find('span', attrs = {'itemprop' : 'addressRegion'}) is not None:
-                state_data = t.find('span', attrs = {'itemprop' : 'addressRegion'})
-                state = state_data.text
-                theater_states.append(state)
-
-            if t.find('span', attrs = {'itemprop' : 'postalCode'}) is not None:
-                zip_data = t.find('span', attrs = {'itemprop' : 'postalCode'})
-                zip = zip_data.text
-                theater_zips.append(zip)
+#                theater_zips.append(zip)
 
             theater_details = f"""
 
@@ -244,13 +155,8 @@ Submitting your entry...
                     else:
                         time = "Sorry--No movie times found."
 
-#                    if m.h4.span.a.text is not None:
-#                        title = m.h4.span.a.text
-#                        movie_titles.append(title)
-
                     if m.h4.span.a.text is not None:
                         title = m.h4.span.a.text
-#                        time = "Sorry--No movie times found."
 
                     if m.div.div is not None:
                         movie_data = m.div.div
@@ -262,16 +168,89 @@ Submitting your entry...
                         if movie_data.a["data-displaytimes"] is not None:
                             time = movie_data.a["data-displaytimes"]
 
+#                    movie_titles.append(title)
+#                    movie_times.append(time)
 
-                    movie_titles.append(title)
-                    movie_times.append(time)
 
-#                    if m.div.div is not None:
-#                        movie_data = m.div.div
-#                        title = movie_data.a["data-title"]
-#                        movie_titles.append(title)
-#                        time = movie_data.a["data-displaytimes"]
-#                        movie_times.append(time)
+                    movie_showtime = f"""
+            {title}
+            {time}
+            """
+
+                    print(movie_showtime)
+
+#                    movie_showtimes.append(movie_showtime)
+
+        for t in soup_div_even:
+
+            if t.find('div', class_ = "fav_box") is not None:
+                theater_data = t.find('div', class_ = "fav_box")
+                theater = theater_data.h3.a.text
+#                theater_names.append(theater)
+
+            if t.find('span', attrs = {'itemprop' : 'streetAddress'}) is not None:
+                street_data = t.find('span', attrs = {'itemprop' : 'streetAddress'})
+                street = street_data.text
+#                theater_streets.append(street)
+
+            if t.find('span', attrs = {'itemprop' : 'addressLocality'}) is not None:
+                city_data = t.find('span', attrs = {'itemprop' : 'addressLocality'})
+                city = city_data.text
+#                theater_cities.append(city)
+
+            if t.find('span', attrs = {'itemprop' : 'addressRegion'}) is not None:
+                state_data = t.find('span', attrs = {'itemprop' : 'addressRegion'})
+                state = state_data.text
+#                theater_states.append(state)
+
+            if t.find('span', attrs = {'itemprop' : 'postalCode'}) is not None:
+                zip_data = t.find('span', attrs = {'itemprop' : 'postalCode'})
+                zip = zip_data.text
+#                theater_zips.append(zip)
+
+            theater_details = f"""
+
+{theater}
+{street}
+{city}, {state} {zip}"""
+
+            print(theater_details)
+
+            if t.find_all('div', class_ = "info") is not None:
+                showtime_data = t.find_all('div', class_ = "info")
+
+                for m in showtime_data:
+
+                    if m.find('div', class_ = "showtimes") is not None:
+
+#with help from URL: http://texthandler.com/info/remove-line-breaks-python/
+
+                        time_data = m.find('div', class_ = "showtimes")
+                        time = time_data.text
+                        time = time.replace("\r","")
+                        time = time.replace("\n","")
+                        time = time.replace(" ","")
+                        time = time.replace("0a","0 a")
+                        time = time.replace("0p","0 p")
+                    else:
+                        time = "Sorry--No movie times found."
+
+                    if m.h4.span.a.text is not None:
+                        title = m.h4.span.a.text
+
+                    if m.div.div is not None:
+                        movie_data = m.div.div
+                        if movie_data.a["data-title"] is not None:
+                            title = movie_data.a["data-title"]
+                        else:
+                            title = title
+
+                        if movie_data.a["data-displaytimes"] is not None:
+                            time = movie_data.a["data-displaytimes"]
+
+#                    movie_titles.append(title)
+#                    movie_times.append(time)
+
 
                     movie_showtime = f"""
             {title}
