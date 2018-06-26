@@ -78,7 +78,6 @@ Submitting your entry...
         soup_div = soup_response.find_all('div', class_ = "list_item odd")
         soup_div_even = soup_response.find_all('div', class_ = "list_item even")
 
-
         ##COLLECT ALL THEATERS
         theater_names = []
         theater_streets = []

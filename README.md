@@ -33,4 +33,12 @@ Run the application:
 python3 app/showtimes.py
 ```
 
+## Testing
+To run the tests successfully, first update the test_url() and test_date() functions with the current date.
+
+Run the test:
+```sh
+pytest test/
+```
+
 ## [License](LICENSE.md)

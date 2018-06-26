@@ -1,0 +1,8 @@
+[
+  "test/showtime_test.py::test_date",
+  "test/showtime_test.py::test_zip_len",
+  "test/showtime_test.py::test_zip_float",
+  "test/showtime_test.py::test_url",
+  "test/showtime_test.py::test_good_url",
+  "test/showtime_test.py::test_bad_url"
+]
